@@ -63,14 +63,27 @@ a {
 }
 
 img.logo {
-  height:40px;
-  margin-right:.5rem;
-  padding-left: 10px;
+  height:35px;
+  padding-left: 5px;
 }
 
-#button-text {
+.pdf-button {
+
+}
+
+.pdf-button:hover {
+  background-color: #dddddd;
+}
+
+.button-text {
   margin-top: 0;
   display: center;
+  font-size: 12px;
+}
+
+.description {
+  padding-top: 10px;
+  font-size: 14px;
 }
 
 /*Icons*/

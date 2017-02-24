@@ -8,20 +8,16 @@
 <body>
 
   <!-- Change DroneDeploy To your Name -->
-  <div class="container">
-    <a>
-      <div class="row">
-        <div class="col-1">
-          <img class="logo" src="img/icon2.png">
-          <p id="button-text">Generate</p>
-        </div>
-        <div class="col-3">
-          <p>
-            Generate a PDF of this map
-          </p>
-        </div>
+  <div class="container pdf-button" onclick="updateTile()">
+    <div class="row">
+      <div class="col-1">
+        <img class="logo" src="img/icon2.png">
+        <div class="button-text">Generate</div>
       </div>
-    </a>
+      <div class="col-3 description">
+        Generate a PDF of this map
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
