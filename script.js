@@ -1,38 +1,30 @@
 const tileLinks = []
 const layer = 'ortho'
 const zoom = 17
+const doc = new jsPDF()
+let ddApi = null
 
 function downloadPDF() {
-  const doc = new jsPDF()
   updateTile()
-  console.log(`titles #item: `, tileLinks.length)
-  for (const url in tileLinks) {
-    doc.addImage(url, 'JPEG', 15, 40, 180, 180)
-  }
-  doc.save('CurrentMap.pdf')
+  //doc.save("Map.pdf")
 }
-
-let dronedeployApiZ = null
 
 function updateTile(){
   new DroneDeploy({version: 1}).then(function(dronedeployApi){
-    dronedeployApiZ = dronedeployApi
+    ddApi = dronedeployApi
     return dronedeployApi.Plans.getCurrentlyViewed()
   })
   .then(function(plan){
-    return fetchTileDataFromPlan(dronedeployApiZ, plan)
+    return fetchTileDataFromPlan(plan)
   })
   .then(getTilesFromResponse)
   .then(getLinks)
+  .then(addImagetoPDF)
 }
 
-function fetchTileDataFromPlan(api, plan){
-  console.log(`PlanId: `, plan.id)
-  console.log(`Layer: `, layer)
-  console.log(`zoon: `, zoom)
-  console.log(`API: `, api)
+function fetchTileDataFromPlan(plan){
 
-  return api.Tiles.get({
+  return ddApi.Tiles.get({
     planId: plan.id,
     layerName: layer,
     zoom: parseInt(zoom)
@@ -40,10 +32,37 @@ function fetchTileDataFromPlan(api, plan){
 }
 
 function getTilesFromResponse(tileResponse){
-  console.log(`Get tiles from response`)
   return tileResponse.tiles
 }
 
 function getLinks(linkURL) {
-  console.log(`linkURL: `, linkURL)
+  for (const imgUrl in linkURL) {
+    tileLinks.push(imgUrl)
+  }
+}
+
+function addImagetoPDF() {
+  console.log(`Adding image`)
+  for (const url in tileLinks) {
+    getBase64Image(url, (dataUrl) => {
+      console.log('Data Url:', dataUrl)
+      doc.addImage(dataUrl, 'png', 0, 0, 50, 50)
+    })
+  }
+}
+
+function getBase64Image(img, callback) {
+  console.log("converting iamge")
+  var image = new Image()
+  image.src = img
+  var canvas = document.createElement('canvas')
+  image.onload = function () {
+    canvas.width = this.naturalWidth
+    canvas.height = this.naturalHeight
+    console.log("Width", canvas.width)
+    console.log("Height", canvas.height)
+    canvas.getContext('2d').drawImage(this, 0, 0)
+    // ... or get as Data URI
+    callback(canvas.toDataURL(img).replace(/^data:image\/(png|jpg);base64,/, ''))
+   };
 }
