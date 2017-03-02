@@ -43,3 +43,5 @@ Screenshot:
   I was able to create and download the PDF file with no problem. However, adding images to the PDF requires an additional step which converts the regular image to `DataURL Base64` format.
 
   However, the several ways using `HTML Canvas` or `FileReader` all failed to convert the images to DataURL due to `No 'Access-Control-Allow-Origin' header` and the request was `blocked` by chrome.
+
+  An alternative solution will be building a server to convert the image url to base64 url. The server code is [here](https://github.com/lianwangtao/Dronedeploy-dataUrl). However the `node-base64-image` library did not convert to the correct dataUrl. Another converting method is `Buffer()` but it didn't yield the correct output either.  
