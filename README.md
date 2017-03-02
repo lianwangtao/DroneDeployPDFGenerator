@@ -1,7 +1,10 @@
 # DroneDeploy PDF Generator
 
+Screenshot:
+![App Screenshot](./img/AppScreenShot.png)
+
 ##  Utilizing the Drone Deploy API to retrieve map tile information and generate PDF with map tiles
-  This application works in the `Annotation & Measurement` section in a project. It will collect the Map tiles images and store them into a PDF format file and automatically download it for the user. 
+  This application works in the `Annotation & Measurement` section in a project. It will collect the Map tiles images and store them into a PDF format file and automatically download it for the user.
 
 ### Development process
 
